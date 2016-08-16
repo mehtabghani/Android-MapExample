@@ -10,9 +10,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback {
 
     private GoogleMap mMap;
+    LocationListFragment mListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +24,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+         mListFragment = new LocationListFragment();
+        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.table_frame_layout, mListFragment, "");
+        fragmentTransaction.commit();
     }
 
 
@@ -38,14 +44,40 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng karachi = new LatLng(24.8615, 67.0099);
-        mMap.addMarker(new MarkerOptions().position(karachi).title("Marker in karachi"));
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(karachi));
-        mMap.moveCamera(CameraUpdateFactory.zoomBy(20.0f));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(karachi));
+        mMap.setOnMapLoadedCallback(this);
 
     }
+
+    @Override
+    public void onMapLoaded() {
+
+        // Add a marker in Sydney and move the camera
+
+        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+
+//        LatLng karachi = new LatLng(24.886860, 67.085781);
+//        mMap.addMarker(new MarkerOptions().position(karachi).title("Marker in karachi"));
+//        LatLng kabul = new LatLng(24.877628, 67.154617);
+//        mMap.addMarker(new MarkerOptions().position(kabul).title("Marker in kabul"));
+
+        // Create a LatLngBounds that includes Australia.
+
+//        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+//        builder.include(karachi);
+//        builder.include(kabul);
+
+          //mMap.moveCamera(CameraUpdateFactory.newLatLng(karachi));
+       // mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 5));
+       //   mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(builder.build().getCenter(), 10));
+    }
+
+    public void moveCamerToLatLong(LatLng latLng) {
+
+        mMap.addMarker(new MarkerOptions().position(latLng).title(""));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(10));
+
+    }
+
 }
