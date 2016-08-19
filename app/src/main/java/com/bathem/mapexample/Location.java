@@ -4,6 +4,7 @@ package com.bathem.mapexample;
  * Created by mehtab on 15/08/2016.
  */
 public class Location {
+    private int locId;
     private String locationName;
     private double latitude;
     private double longitude;
@@ -36,5 +37,13 @@ public class Location {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    public int getLocId() {
+        return locId;
+    }
+
+    public void setLocId(int locId) {
+        this.locId = locId;
     }
 }

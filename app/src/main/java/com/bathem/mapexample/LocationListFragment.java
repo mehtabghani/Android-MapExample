@@ -67,7 +67,10 @@ public class LocationListFragment extends Fragment {
                 if(loc == null)
                     return;
 
+
+
                 Toast.makeText(v.getContext(), "Location: " + loc.getLocationName(), Toast.LENGTH_SHORT).show();
+
                 moveCamerToLatLong(new LatLng(loc.getLatitude(), loc.getLongitude()));
             }
 
@@ -87,6 +90,9 @@ public class LocationListFragment extends Fragment {
     private void initializeLocations() {
         mLocations = new ArrayList<Location>();
 
+        Location currentLoc = new Location("My Location" , 24.861462, 67.009939);
+        currentLoc.setLocId(1);
+        mLocations.add(currentLoc);
         Location karachi = new Location("Karachi" , 24.861462, 67.009939);
         mLocations.add(karachi);
         Location dubai = new Location("Dubai" , 25.2048, 55.2708);
